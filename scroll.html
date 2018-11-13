@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+*{
+    margin:0;
+    padding:0;
+}
+p{
+    height: 350px;
+    background: pink;
+    margin-top:20px;
+}
+span{
+    display:inline-block;
+    width: 24%;
+    text-align: center;
+    line-height: 40px
+}
+.tbar{position: fixed;top:0;width: 100%;background: #fff;z-index:10}
+.boxBody{position: absolute;top:40px;width: 100%;};
+#box{position: relative}
+</style>
+<body>
+    <div id="box">
+        <div class="tbar" id="tbar">
+            <span>一</span>
+            <span>二</span>
+            <span>三</span>
+            <span>四</span>
+        </div>
+        <div class="boxBody" id="boxBody">
+            <p>第一板块</p>
+            <p>第二板块</p>
+            <p>第三板块</p>
+            <p>第四板块</p>
+        </div>
+    </div>
+    <script>
+        window.onload = function(){
+            //获取点击事件
+            const box = document.getElementById('box');
+            const btn = box.getElementsByTagName('span');
+            const pTeam = box.getElementsByTagName('p');
+            const boxBody = document.getElementById('boxBody');
+
+            for(var i = 0;i<btn.length;i++){
+                (function(){
+                    var index = i;
+                    btn[i].onclick = function(){
+                        scrollTop(index);
+                    }                       
+                })()
+                
+            };
+
+            function scrollTop(index){
+                const Tops = pTeam[index].offsetTop ;
+                scrollAnimation(0, Tops)
+            };
+            function scrollAnimation(currentY, targetY) {
+                let needScrollTop = targetY - currentY ;
+                let _currentY = currentY ;
+                setTimeout(function() { 
+                    const dist = Math.ceil(needScrollTop / 10);
+                    _currentY += dist ;
+                    window.scrollTo(_currentY, currentY) 
+                    if (needScrollTop > 10 || needScrollTop < -10) { 
+                    scrollAnimation(_currentY, targetY) 
+                    } else { 
+                    window.scrollTo(_currentY, targetY) } 
+                }, 1) 
+            }            
+        }
+        
+    </script>
+</body>
+</html>
